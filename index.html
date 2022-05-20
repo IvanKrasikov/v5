@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css"> 
+    <meta charset="UTF-8">
+    <title>"FQW"</title>
+</head>
+<body>
+    <div  id="app">
+        <!-- Кнопки -->
+        <div id="btn">
+            <button :style="{'background-color':buttonColor[0]}" @click="SN=1; activeButton = 0">Параметры ЛР№{{LA}}</button>
+            <button :disabled = "BD" :style="{'background-color':buttonColor[1]}" @click="SN=2; activeButton = 1">МОПы</button>
+            <button :disabled = "BD" :style="{'background-color':buttonColor[2]}" @click="SN=3; activeButton = 2">КонвейерООО</button>
+            <button :disabled = "BD" :style="{'background-color':buttonColor[3]}" @click="SN=4; activeButton = 3">ДиаграммаOOO</button>
+            <button :disabled = "BD" :style="{'background-color':buttonColor[4]}" @click="SN=5; activeButton = 4">КонвейерIO</button>
+            <button :disabled = "BD" :style="{'background-color':buttonColor[5]}" @click="SN=6; activeButton = 5">ДиаграммаIO</button>
+            
+        </div>
+        <!-- Таблицы -->
+        <div id="content">
+            <!-- Параметры -->
+            <template v-if="SN===1">
+                <div class="vvod" >
+                    <p >Устройств чтения:
+                        <select v-model="RD">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                        </select>
+                    </p>
+                    <p>Устройств обработки: 
+                        <select v-model="AL">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                        </select>
+                    </p>
+                    <p>Устройств записи: 
+                        <select v-model="SM">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                        </select>
+                    </p>
+                    <p>Операций с памятью: 
+                        <select v-model="OM">
+                            <option value="0">0%</option>
+                            <option value="1">25%</option>
+                            <option value="2">50%</option>
+                            <option value="3">75%</option>
+                            <option value="4">100%</option>
+                        </select>
+                    </p>
+                    <p>Размер пачки: 
+                        <select v-model="PA">
+                            <option value="16">16 байтой</option>
+                            <option value="32">32 байта</option>
+                            <option value="64">64 байта</option>
+                        </select>
+                    </p>
+                    <p>Вариант: 
+                        <select v-model="VA">
+                            <option value="0"> 1</option>
+                            <option value="1"> 2</option>
+                            <option value="2"> 3</option>
+                            <option value="3"> 4</option>
+                            <option value="4"> 5</option>
+                            <option value="5"> 6</option>
+                            <option value="6"> 7</option>
+                            <option value="7"> 8</option>
+                            <option value="8"> 9</option>
+                            <option value="9">10</option>
+                        </select>
+                    </p>
+                    <p>Лабораторная №: 
+                        <select v-model="LA">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </p>
+                    <button id="start"   v-on:click ="start">Запуск</button>
+                    <button id="special" v-on:click ="special">1000</button>
+                </div>
+            </template>
+            <!-- МОПы -->
+            <template v-if="SN===2">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <th class="Num"> № </th>
+                            <th>Инструкции</th>
+                            <th> </th>
+                            <th> </th>
+                            <th> </th>
+                            <th> </th>
+                            <th> </th>
+                        </tr>
+                    </thead>                
+                    <tr v-for="(mop, index) in TM" :class="mop.path ? 'tr1':''">
+                        <td class="Num"><p>{{index}}</p></td>
+
+                       <td v-for="m in mop.str"> <p> {{ m }} </p></td>
+                    </tr>                    
+                </table>
+              
+            </template>
+            <!-- КонвейерООО -->
+            <template v-if="SN===3">
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th v-for="t in Ct"> {{ t }}</th>
+                            </tr>
+                        </thead>
+                        <tr v-for="con in CO">
+                            <td v-for="c in con"><p>{{ c }}</p></td>
+                        </tr>
+                    </table>
+                </div>
+            </template>
+            <!-- ДиаграммаООО -->
+            <template v-if="SN===4">
+                <div id="t-outOfOrder">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th v-for="t in TOt"> {{ t }}</th>
+                            </tr>
+                        </thead>
+                        <tr v-for="ooo in TO">
+                             <td v-for="o in ooo"><p :class="o.color? 'red':'blue'">{{ o.str }} </p> </td> 
+                        </tr>
+                    </table>
+                </div>
+            </template>
+            <!-- КонвейерIO -->
+            <template v-if="SN===5">
+                <div id="t-conv">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th v-for="t in Ct"> {{ t }}</th>
+                            </tr>
+                        </thead>
+                        <tr v-for="con in CI">
+                            <td v-for="c in con"><p>{{ c }}</p></td>
+                        </tr>
+                    </table>
+                </div>
+            </template>
+            <!-- ДиаграммаIO -->
+            <template v-if="SN===6">
+                <div id="t-inOrder">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th v-for="t in TIt"> {{ t }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="ioo in TI">
+                                <td v-for="i in ioo"><p :class="i.color? 'red':'blue'">{{ i.str }} </p> </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </template>
+            <!-- 1000 -->
+            <template v-if="SN===7" >
+                <div class="vvod">
+                    <table>
+                        <tr><td><p>OOO:</p></td><td>{{ OOO }}</td></tr>
+                        <tr><td><p>InO:</p></td><td>{{ InO }}</td></tr>
+                    </table>
+
+                    <button id="stop" v-on:click="SN=1">Закрыть</button>
+                </div>
+            </template>
+        </div>
+    </div>
+    <!-- <script src="https://unpkg.com/vue@3"></script> -->
+    <script src="vue.global.js"></script>
+    <script src="variant.js"></script> 
+    <script src="script.js"></script> 
+</body>
+</html>
