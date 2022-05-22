@@ -76,6 +76,7 @@ table{
     margin-top: 50px;
     border-collapse: collapse;
     width: 100%; 
+    background: white;
 }
 table tr:hover{
     background: #aaf;
